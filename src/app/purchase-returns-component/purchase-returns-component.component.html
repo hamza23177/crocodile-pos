@@ -1,0 +1,82 @@
+<div class="container mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4 text-gray-700">إدارة مردودات المشتريات</h2>
+
+  <form [formGroup]="purchaseReturnForm" (ngSubmit)="submitForm()" class="bg-white p-6 rounded-lg shadow-lg space-y-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-gray-700">المورد:</label>
+        <input formControlName="supplier" type="text" class="w-full p-2 border rounded-lg">
+      </div>
+
+      <div>
+        <label class="block text-gray-700">رقم فاتورة الشراء:</label>
+        <input formControlName="purchaseInvoiceId" type="number" class="w-full p-2 border rounded-lg">
+      </div>
+    </div>
+
+    <label class="block text-gray-700">تاريخ المرتجع:</label>
+    <input formControlName="returnDate" type="date" class="w-full p-2 border rounded-lg">
+
+    <h3 class="text-lg font-semibold mt-4">الأصناف المرتجعة:</h3>
+    <div *ngFor="let item of returnItems.controls; let i = index" class="grid grid-cols-5 gap-4 bg-gray-50 p-2 rounded">
+      <input formControlName="name" placeholder="اسم الصنف" class="p-2 border rounded">
+      <input formControlName="quantity" type="number" (input)="calculateTotal()" placeholder="الكمية" class="p-2 border rounded">
+      <input formControlName="cost" type="number" (input)="calculateTotal()" placeholder="التكلفة" class="p-2 border rounded">
+      <input formControlName="total" type="number" [disabled]="true" class="p-2 border rounded">
+      <button (click)="removeReturnItem(i)" type="button" class="text-red-500">X</button>
+    </div>
+
+    <button type="button" (click)="addReturnItem()" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">إضافة صنف</button>
+
+    <label class="block text-gray-700">التكلفة الإجمالية:</label>
+    <input formControlName="totalCost" type="number" [disabled]="true" class="w-full p-2 border rounded-lg bg-gray-100">
+
+    <label class="block text-gray-700">ملاحظات:</label>
+    <textarea formControlName="notes" class="w-full p-2 border rounded-lg"></textarea>
+
+    <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-lg w-full">حفظ</button>
+  </form>
+
+  <div id="printableSection" class="print:block bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-gray-700 mb-4">سجل المرتجعات</h2>
+    <button (click)="printPurchaseReturns()" class="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4">
+      طباعة السجل
+    </button>
+
+    <table class="w-full mt-4 border-collapse">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="p-2">رقم</th>
+          <th class="p-2">المورد</th>
+          <th class="p-2">الإجمالي</th>
+          <th class="p-2">الحالة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of purchaseReturns" class="border-b">
+          <td class="p-2">{{ order.id }}</td>
+          <td class="p-2">{{ order.supplier }}</td>
+          <td class="p-2">{{ order.totalCost }}</td>
+          <td class="p-2">{{ order.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mt-6">
+      <h3 class="text-lg font-semibold">التوقيعات:</h3>
+      <div class="flex justify-between mt-4">
+        <div>
+          <p class="font-semibold">اسم المستخدم الذي قام بالإدخال:</p>
+          <p>{{ currentUser }}</p>
+          <p class="mt-2 border-t border-gray-400 w-40">التوقيع</p>
+        </div>
+
+        <div>
+          <p class="font-semibold">اسم الشخص المراجع:</p>
+          <p>{{ reviewer }}</p>
+          <p class="mt-2 border-t border-gray-400 w-40">التوقيع</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

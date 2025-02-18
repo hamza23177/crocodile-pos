@@ -1,0 +1,53 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">📦 سند استلام البضاعة</h2>
+
+  <!-- اختيار المستودع -->
+  <div class="mb-4">
+    <label class="block text-gray-700 font-semibold mb-2">اختر المستودع:</label>
+    <select [(ngModel)]="selectedWarehouse" class="p-2 border rounded w-full">
+      <option value="" disabled>اختر المستودع</option>
+      <option *ngFor="let warehouse of warehouses" [value]="warehouse">{{ warehouse }}</option>
+    </select>
+  </div>
+
+  <!-- اختيار طلب الشراء -->
+  <div class="mb-4">
+    <label class="block text-gray-700 font-semibold mb-2">اختر طلب الشراء:</label>
+    <select (change)="selectPurchaseOrder($event)" class="p-2 border rounded w-full">
+      <option value="" disabled selected>اختر طلب الشراء</option>
+      <option *ngFor="let order of purchaseOrders; let i = index" [value]="i">
+        طلب رقم {{ order.id }} - المورد: {{ order.supplier }}
+      </option>
+    </select>
+  </div>
+
+  <!-- جدول استلام الأصناف -->
+  <div *ngIf="selectedPurchaseOrder" class="mt-4">
+    <table class="w-full border-collapse bg-gray-50">
+      <thead>
+        <tr class="border-b bg-gray-100">
+          <th class="p-2">الصنف</th>
+          <th class="p-2">الكمية المطلوبة</th>
+          <th class="p-2">الوحدة</th>
+          <th class="p-2">الكمية المستلمة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of receivedItems; let i = index" class="border-b">
+          <td class="p-2">{{ item.name }}</td>
+          <td class="p-2">{{ item.quantity }}</td>
+          <td class="p-2">{{ item.unit }}</td>
+          <td class="p-2">
+            <input type="number" [(ngModel)]="item.received" (input)="updateReceivedQuantity(i, $event)"
+                   class="input-field w-20 text-center" min="0" [max]="item.quantity">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- زر إرسال السند -->
+  <div class="mt-6 text-right">
+    <button (click)="submitGoodsReceipt()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">📤 إرسال سند الاستلام</button>
+  </div>
+</div>

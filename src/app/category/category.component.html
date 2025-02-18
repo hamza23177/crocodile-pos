@@ -1,0 +1,54 @@
+<div class="container">
+  <h2>Product Categories</h2>
+
+  <mat-form-field class="search-field">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search categories">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" class="create-button">
+    Create Product Category
+  </button>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let category">
+        <img [src]="category.image" class="category-image">
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Product Category </th>
+      <td mat-cell *matCellDef="let category">{{ category.name }}</td>
+    </ng-container>
+
+    <!-- Product Count Column -->
+    <ng-container matColumnDef="productCount">
+      <th mat-header-cell *matHeaderCellDef> Product Count </th>
+      <td mat-cell *matCellDef="let category">{{ category.productCount }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let category">
+        <button mat-icon-button color="accent" (click)="editCategory(category)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteCategory(category)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>

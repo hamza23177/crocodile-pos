@@ -1,0 +1,225 @@
+    <!-- App Bar -->
+    <div
+      class="bg-white shadow-md p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50"
+    >
+      <div class="flex items-center space-x-4">
+        <img src="assets/logo.png" alt="Logo" class="w-10 h-10" />
+        <h1 class="text-xl font-bold text-gray-700">crocodile-pos</h1>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="text-gray-700 font-semibold">hello, {{ userName }}</span>
+        <img
+          src="assets/user-avatar.png"
+          alt="User Avatar"
+          class="w-10 h-10 rounded-full"
+        />
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="flex h-screen pt-16">
+      <div
+        class="bg-gradient-to-b from-blue-600 to-purple-700 text-white p-5 flex flex-col space-y-2 h-screen lg:w-64 md:w-52 sm:w-48 w-full max-h-screen overflow-y-auto sticky top-0 shadow-lg"
+      >
+        <!-- نموذج البحث -->
+        <div class="relative">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="onSearchChange($event)"
+            placeholder="🔍 بحث..."
+            class="w-full px-4 py-2 border rounded-md text-black focus:ring-2 focus:ring-blue-500 shadow-md"
+          />
+          <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+        </div>
+
+        <!-- القوائم -->
+        <!-- Dashboard -->
+        <ul class="space-y-1">
+          <li
+            class="flex items-center space-x-2 hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-tachometer-alt"></i>
+            <span>📊 Dashboard</span>
+          </li>
+
+          <!-- Products -->
+          <li>
+            <div
+              class="flex items-center justify-between hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+              (click)="toggleDropdown('productsMenu')"
+            >
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-box-open"></i>
+                <span>📦 Products</span>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul id="productsMenu" class="hidden pl-6 space-y-1">
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('products')">
+                📦 Products
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('category')">
+                📂 Product Categories
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('variation')">
+                🔀 Variations
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                🏷️ Brands
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                📏 Units
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                ⚖️ Base Units
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                🖨️ Print Barcode
+              </li>
+            </ul>
+          </li>
+
+          <!-- Adjustments -->
+          <li
+            class="flex items-center space-x-2 hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-sliders-h"></i>
+            <span>🔧 Adjustments</span>
+          </li>
+
+          <!-- Quotations -->
+          <li
+            class="flex items-center space-x-2 hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-file-invoice"></i>
+            <span>📄 Quotations</span>
+          </li>
+
+<!-- Purchases -->
+<li>
+  <div
+    class="flex items-center justify-between hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+    (click)="toggleDropdown('purchasesMenu')"
+  >
+    <div class="flex items-center space-x-2">
+      <i class="fas fa-shopping-cart"></i>
+      <span>🛒 Purchases</span>
+    </div>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <ul id="purchasesMenu" class="hidden pl-6 space-y-1">
+    <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('supplyRequest')">
+      📄 Supply Request
+    </li>
+    <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('purchaseRequest')">
+      📝 Purchase Request
+    </li>
+    <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('goodsReceipt')">
+      📦 Goods Receipt
+    </li>
+    <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('purchaseInvoice')">
+      🧾 Purchase Invoice
+    </li>
+    <li class="hover:bg-blue-400 p-2 rounded cursor-pointer" (click)="navigateTo('purchaseReturns')">
+      🔄 Purchase Returns
+    </li>
+  </ul>
+</li>
+
+          <!-- Sales -->
+          <li>
+            <div
+              class="flex items-center justify-between hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+              (click)="toggleDropdown('salesMenu')"
+            >
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-cash-register"></i>
+                <span>💰 Sales</span>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul id="salesMenu" class="hidden pl-6 space-y-1">
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                🛒 Sales
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                🔄 Sales Returns
+              </li>
+            </ul>
+          </li>
+
+          <!-- Transfers -->
+          <li
+            class="flex items-center space-x-2 hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-exchange-alt"></i>
+            <span>🔄 Transfers</span>
+          </li>
+
+          <!-- Expenses -->
+          <li>
+            <div
+              class="flex items-center justify-between hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+              (click)="toggleDropdown('expensesMenu')"
+            >
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-wallet"></i>
+                <span>💳 Expenses</span>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul id="expensesMenu" class="hidden pl-6 space-y-1">
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                💰 Expenses
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                📋 Expense Categories
+              </li>
+            </ul>
+          </li>
+
+          <!-- Peoples -->
+          <li>
+            <div
+              class="flex items-center justify-between hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+              (click)="toggleDropdown('peoplesMenu')"
+            >
+              <div class="flex items-center space-x-2">
+                <i class="fas fa-users"></i>
+                <span>👥 Peoples</span>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <ul id="peoplesMenu" class="hidden pl-6 space-y-1">
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                👨‍💼 Suppliers
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                👩‍👩‍👦 Customers
+              </li>
+              <li class="hover:bg-blue-400 p-2 rounded cursor-pointer">
+                🛠️ Users
+              </li>
+            </ul>
+          </li>
+
+          <!-- Roles/Permissions -->
+          <li
+            class="flex items-center space-x-2 hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-user-shield"></i>
+            <span>🔑 Roles/Permissions</span>
+          </li>
+
+          <!-- Settings -->
+          <li
+            class="flex items-center space-x-2 hover:bg-blue-500 p-3 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-cog"></i>
+            <span>⚙️ Settings</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+

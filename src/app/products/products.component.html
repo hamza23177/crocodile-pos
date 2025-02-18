@@ -1,0 +1,97 @@
+<div class="container">
+  <mat-card>
+    <div class="header">
+      <h2>Products</h2>
+      <button mat-raised-button color="primary">
+        + Create Product
+      </button>
+    </div>
+
+    <!-- مربع البحث -->
+    <mat-form-field class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search products">
+    </mat-form-field>
+
+    <!-- جدول المنتجات -->
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- صورة المنتج -->
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef> Product </th>
+        <td mat-cell *matCellDef="let element">
+          <img [src]="element.image" class="product-img">
+        </td>
+      </ng-container>
+
+      <!-- الاسم -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- الكود -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="code-badge">{{element.code}}</span>
+        </td>
+      </ng-container>
+
+      <!-- العلامة التجارية -->
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef> Brand </th>
+        <td mat-cell *matCellDef="let element"> {{element.brand}} </td>
+      </ng-container>
+
+      <!-- السعر -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} $ </td>
+      </ng-container>
+
+      <!-- الوحدة -->
+      <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef> Unit </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="unit-badge">{{element.unit}}</span>
+        </td>
+      </ng-container>
+
+      <!-- المخزون -->
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef> In Stock </th>
+        <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+      </ng-container>
+
+      <!-- تاريخ الإنشاء -->
+      <ng-container matColumnDef="createdOn">
+        <th mat-header-cell *matHeaderCellDef> Created On </th>
+        <td mat-cell *matCellDef="let element"> {{element.createdOn}} </td>
+      </ng-container>
+
+      <!-- الإجراءات -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="accent">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteProduct(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- الترقيم -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+
+  </mat-card>
+</div>

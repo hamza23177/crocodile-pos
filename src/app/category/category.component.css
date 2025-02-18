@@ -1,0 +1,21 @@
+.container {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.search-field {
+  width: 50%;
+  margin-bottom: 15px;
+}
+
+.create-button {
+  float: right;
+  margin-bottom: 15px;
+}
+
+.category-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}

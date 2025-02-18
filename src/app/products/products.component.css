@@ -1,0 +1,26 @@
+.container {
+  padding: 20px;
+}
+
+.product-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.code-badge {
+  background-color: #f8d7da;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.unit-badge {
+  background-color: #d4edda;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.search-field {
+  width: 100%;
+  margin-bottom: 10px;
+}

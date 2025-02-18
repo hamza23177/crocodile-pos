@@ -1,0 +1,70 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+  <h2 class="text-2xl font-bold mb-4 text-gray-700">📄 فاتورة الشراء</h2>
+
+  <form [formGroup]="purchaseInvoiceForm" (ngSubmit)="submitInvoice()" class="space-y-4">
+    <!-- المورد والتاريخ -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block font-medium">المورد:</label>
+        <input formControlName="supplier" type="text" class="w-full p-2 border rounded" placeholder="اسم المورد" required>
+      </div>
+
+      <div>
+        <label class="block font-medium">تاريخ الفاتورة:</label>
+        <input formControlName="invoiceDate" type="date" class="w-full p-2 border rounded" required>
+      </div>
+    </div>
+
+    <!-- قائمة سندات الاستلام -->
+    <div class="border p-4 rounded-lg">
+      <h3 class="font-bold text-lg">📜 سندات الاستلام</h3>
+      <div *ngFor="let note of receivingNotes.controls; let i = index" class="border-b pb-4 mb-4">
+        <label class="block font-medium">📄 سند استلام رقم:</label>
+        <input formControlName="noteId" type="text" class="w-full p-2 border rounded" placeholder="رقم السند" required>
+
+        <!-- العناصر داخل السند -->
+        <div class="mt-3">
+          <h4 class="font-bold">📦 الأصناف</h4>
+          <div *ngFor="let item of getItems(i).controls; let j = index" class="flex gap-2 mt-2">
+            <input formControlName="name" type="text" class="w-1/3 p-2 border rounded" placeholder="اسم الصنف" required>
+            <input formControlName="quantity" type="number" class="w-1/4 p-2 border rounded" placeholder="الكمية" required>
+            <input formControlName="price" type="number" class="w-1/4 p-2 border rounded" placeholder="السعر" required>
+            <button type="button" class="text-red-500" (click)="removeItem(i, j)">❌</button>
+          </div>
+          <button type="button" class="mt-2 text-blue-500" (click)="addItem(i)">➕ إضافة صنف</button>
+        </div>
+        <button type="button" class="mt-3 text-red-500" (click)="removeReceivingNote(i)">🗑️ حذف السند</button>
+      </div>
+      <button type="button" class="mt-2 text-blue-500" (click)="addReceivingNote()">➕ إضافة سند استلام</button>
+    </div>
+
+    <!-- التكاليف الإضافية -->
+    <div class="border p-4 rounded-lg">
+      <h3 class="font-bold text-lg">💰 التكاليف الإضافية</h3>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label class="block font-medium">تحميل:</label>
+          <input formControlName="loading" type="number" class="w-full p-2 border rounded">
+        </div>
+        <div>
+          <label class="block font-medium">التخزين:</label>
+          <input formControlName="storage" type="number" class="w-full p-2 border rounded">
+        </div>
+        <div>
+          <label class="block font-medium">الجمارك:</label>
+          <input formControlName="customs" type="number" class="w-full p-2 border rounded">
+        </div>
+      </div>
+      <div class="mt-3">
+        <label class="block font-medium">📊 تحميل المصاريف على:</label>
+        <select formControlName="applyTo" class="w-full p-2 border rounded">
+          <option value="cost">✅ تكلفة الصنف</option>
+          <option value="income">📊 بيانات الدخل</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- زر الحفظ -->
+    <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold">💾 حفظ الفاتورة</button>
+  </form>
+</div>
